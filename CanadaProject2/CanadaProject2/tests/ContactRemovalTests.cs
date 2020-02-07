@@ -10,7 +10,7 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTests
+    public class ContactRemovalTests
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -40,39 +40,29 @@ namespace WebAddressbookTests
         }
 
         [Test]
-        public void ContactCreationTest()
+        public void ContactRemovalTest()
         {
             OpenHomePage();
             Login(new AccountData("admin", "secret"));
-            InitNewContactCreation();
-            ContactData contact = new ContactData("Bob");
-            contact.Lastname = "Head";
-            FillContactForm(contact);
-            SubmitContactCreation();
+            SelectContact("7");
+            RemoveContact();
             ReturnToContactPage();
         }
 
         private void ReturnToContactPage()
         {
-            driver.FindElement(By.LinkText("home page")).Click();
+            driver.FindElement(By.LinkText("home")).Click();
         }
 
-        private void SubmitContactCreation()
+        private void RemoveContact()
         {
-            driver.FindElement(By.Name("submit")).Click();
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
         }
 
-        private void FillContactForm(ContactData contact)
+        private void SelectContact(string id)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
-        }
-
-        private void InitNewContactCreation()
-        {
-            driver.FindElement(By.LinkText("add new")).Click();
+            driver.FindElement(By.Id(id)).Click();
         }
 
         private void Login(AccountData account)
