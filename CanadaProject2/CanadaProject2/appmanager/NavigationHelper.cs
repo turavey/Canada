@@ -9,7 +9,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
-   
+
     public class NavigationHelper : HelperBase
     {
         private string baseURL;
@@ -35,5 +35,15 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("Logout")).Click();
         }
+        public void ReturnToContactPage()
+        {
+            driver.FindElement(By.LinkText("home")).Click();
+        }
+
+        public void OpenContactsPage()
+            {
+            driver.FindElement(By.LinkText("home")).Click();
+         }
+
     }
 }
